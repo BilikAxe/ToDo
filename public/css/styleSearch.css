@@ -1,0 +1,21 @@
+.search-input {
+    width: 500px;
+    font-size: 20px;
+}
+
+.search-button {
+    position: relative;
+    right: 40px;
+    border: none;
+    border-radius: 30px;
+    padding: 5px 5px;
+    font-size: 13px;
+    background-color: white;
+}
+
+.search-a {
+    text-decoration: none;
+    position: relative;
+    top: 3px;
+}
+
