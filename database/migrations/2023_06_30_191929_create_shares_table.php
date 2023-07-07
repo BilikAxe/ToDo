@@ -16,6 +16,8 @@ return new class extends Migration
             $table->bigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('shared_user_id');
+            $table->bigInteger('task_list_id');
+            $table->foreign('task_list_id')->references('id')->on('task_lists')->onDelete('cascade');
             $table->string('access');
             $table->foreign('access')->references('code')->on('permissions');
             $table->timestamps();

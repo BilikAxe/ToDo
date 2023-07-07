@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('task_list_id');
+            $table->foreign('task_list_id')->references('id')->on('task_lists')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
             $table->enum('status', ['В процессе', 'Выполнена', 'Выберите статус'])->default('Выберите статус');

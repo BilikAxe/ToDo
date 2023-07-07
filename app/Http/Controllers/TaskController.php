@@ -36,7 +36,7 @@ class TaskController extends Controller
 
         $this->taskService->createTask($data, $image);
 
-        return redirect()->route('tasks.showMyTasks');
+        return back();
     }
 
     /**
@@ -75,6 +75,7 @@ class TaskController extends Controller
         $otherUsers = User::query()->select('users.*')->whereNotIn('users.id',[$user->id])->get();
 
         return view('tasks.showMyTasks', [
+            'taskListId' => null,
             'tasks' => $tasks,
             'otherUsers' => $otherUsers,
             'permissions' => $permissions,
@@ -83,13 +84,17 @@ class TaskController extends Controller
 
     public function filter(Request $request): View|\Illuminate\Foundation\Application|Factory|Application
     {
+        $taskListId = $request->input('taskListId');
         $permissions = Permission::all();
         $user = auth()->user();
-        $otherUsers = User::query()->select('users.*')->whereNotIn('users.id',[$user->id])->get();
+        $otherUsers = User::query()
+            ->select('users.*')
+            ->whereNotIn('users.id',[$user->id])
+            ->get();
 
         $tag = $request->input('tag');
 
-        $tasks = Task::query()
+        $filteredTasks = Task::query()
             ->select('tasks.*',)
             ->where('user_id', [$user->id])
             ->distinct()
@@ -97,12 +102,13 @@ class TaskController extends Controller
             {
                 return $query
                     ->join('tags', 'tasks.id','=','tags.task_id')
-                    ->where('tags.name', '!=', $tags);
+                    ->where('tags.name', $tags);
             }
         )->paginate();
 
         return view('tasks.showMyTasks', [
-            'tasks' => $tasks,
+            'taskListId' => $taskListId,
+            'tasks' => $filteredTasks,
             'otherUsers' => $otherUsers,
             'permissions' => $permissions,
         ]);
@@ -113,24 +119,45 @@ class TaskController extends Controller
         $user = auth()->user();
         $userIdShared = $request->input('userIdShared');
         $access = $request->input('access');
+        $taskListId = $request->input('taskListId');
+        $shareUserId = Share::where('shared_user_id', $userIdShared)->where('task_list_id', $taskListId)->first();
+        if (!$shareUserId) {
+            Share::create([
+                'owner_id' => $user->id,
+                'shared_user_id' => $userIdShared,
+                'task_list_id' => $taskListId,
+                'access' => $access,
+            ]);
+        }
 
-        Share::create([
-            'owner_id' => $user->id,
-            'shared_user_id' => $userIdShared,
-            'access' => $access,
-        ]);
+        if (isset($shareUserId->access)) {
+            if ($access !== $shareUserId->access) {
+                $shareUserId->update([
+                    'access' => $access,
+                ]);
+            }
+        }
+
 
         return back();
     }
 
-    public function getSharedTasks(): View|Factory|Application
+    public function getSharedTasks(Request $request): View|Factory|Application
     {
+        $taskListId = $request->input('taskListId');
         $user = auth()->user();
         $tasks = $user->tasks()->paginate(5);
-        $shares = Share::with('tasks')->where('shared_user_id','=',[$user->id])->get();
-        $otherUsers = User::query()->select('users.*')->whereNotIn('users.id',[$user->id])->get();
+        $shares = Share::with('tasks')
+            ->where('task_list_id', '=', $taskListId)
+            ->where('shared_user_id','=',[$user->id])
+            ->get();
+        $otherUsers = User::query()
+            ->select('users.*')
+            ->whereNotIn('users.id',[$user->id])
+            ->get();
 
         return view('tasks.sharedTasks', [
+            'taskListId' => $taskListId,
             'tasks' => $tasks,
             'otherUsers' => $otherUsers,
             'shares' => $shares,

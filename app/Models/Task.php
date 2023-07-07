@@ -19,6 +19,7 @@ class Task extends Model
      */
     protected $fillable = [
         'title',
+        'task_list_id',
         'description',
         'status',
         'img_orig_path',
@@ -43,6 +44,11 @@ class Task extends Model
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class, 'task_id', 'id');
+    }
+
+    public function taskList(): BelongsTo
+    {
+        return $this->belongsTo(TaskList::class);
     }
 
     public function getImageUrlAttribute(): ?string

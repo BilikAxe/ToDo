@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="{{ asset('css/styleSearch.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styleTable.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/search.js') }}"></script>
+    <script src="{{ asset('js/modalList.js') }}"></script>
 </head>
 <body>
 {{View::make('layouts.header')}}

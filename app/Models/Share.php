@@ -18,6 +18,7 @@ class Share extends Model
     protected $fillable = [
         'owner_id',
         'shared_user_id',
+        'task_list_id',
         'access',
     ];
 
@@ -39,5 +40,10 @@ class Share extends Model
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class,'user_id', 'owner_id');
+    }
+
+    public function taskLists(): HasMany
+    {
+        return $this->hasMany(TaskList::class, 'id', 'task_list_id');
     }
 }

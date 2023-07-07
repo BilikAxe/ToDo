@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskListController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,8 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks', [TaskController::class, 'filter'])->name('tasks.filter');
     Route::post('/tasks-share', [TaskController::class, 'share'])->name('tasks.share');
     Route::post('/logout', [UserController::class, 'signOut'])->name('signOut');
-    Route::get('/shared', [TaskController::class, 'getSharedTasks'])->name('tasks.shared');
-    Route::get('my-tasks', [TaskController::class, 'showMyTasks'])->name('tasks.showMyTasks');
+    Route::get('/share/{id?}', [TaskController::class, 'getSharedTasks'])->name('tasks.shared');
+    Route::post('/share/{id?}', [TaskController::class, 'getSharedTasks'])->name('tasks.shared');
+    Route::get('/my-tasks', [TaskController::class, 'showMyTasks'])->name('tasks.showMyTasks');
+    Route::get('/lists', [TaskListController::class, 'getMyLists'])->name('lists');
+    Route::get('/list/{id?}', [TaskListController::class, 'getTasks'])->name('lists.showMyTasks');
+    Route::post('/create-task-list', [TaskListController::class, 'store'])->name('lists.store');
+    Route::delete('/lists/{list}', [TaskListController::class, 'delete'])->name('lists.delete');
+    Route::get('/shared-list', [TaskListController::class, 'getSharedTaskLists'])->name('lists.shared');
 });
 
 Route::middleware('guest')->group(function () {

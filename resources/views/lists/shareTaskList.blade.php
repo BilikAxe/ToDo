@@ -12,16 +12,16 @@
                 @method('POST')
 
                 <div class="modal-body">
-                        <div class="form-group">
-                            <label for="status" class="col-form-label">Выберите пользователя:</label>
-                            <select class="form-control" id="userIdShared" name="userIdShared" required>
-                                @foreach($otherUsers as $otherUser)
-                                    <option value={{ $otherUser->id }}>
-                                        {{$otherUser->name}}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="status" class="col-form-label">Выберите пользователя:</label>
+                        <select class="form-control" id="userIdShared" name="userIdShared" required>
+                            @foreach($otherUsers as $otherUser)
+                                <option value={{ $otherUser->id }}>
+                                    {{$otherUser->name}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label for="status" class="col-form-label">Права доступа:</label>

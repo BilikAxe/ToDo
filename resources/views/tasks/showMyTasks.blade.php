@@ -12,13 +12,14 @@
                 <input type="text" class="search-input" name="search" placeholder="Поиск" id="search" value="{{ old('search') }}" style="border-radius: 50px; padding-left: 12px;">
                 <div class="input-group-append">
                     <button class="search-button m-1" type="button" id="filter-btn"><i style="font-size: 15px;" class="fas fa-search"></i></button>
-                    <a class="search-a" href="{{ route('tasks.showMyTasks') }}"><i class="fas fa-times"></i></a>
+                    <a class="search-a" href="{{ route('lists.showMyTasks', $taskListId) }}"><i class="fas fa-times"></i></a>
                 </div>
                 <form method="GET" action="{{ route('tasks.filter') }}" style="position: relative; left: 400px;">
                     <div class="col-auto" style="position:relative;right: 180px;">
                         <input type="text" class="search-input" name="tag" id="tag" placeholder="Введите тег" style="border-radius: 50px; padding-left: 12px;width: 300px;">
+                        <input type="hidden" name="taskListId" value="{{ $taskListId }}">
                         <button class="but-fil" type="submit" style="position: relative;border-radius: 50%; font-size: 12px;background-color: white;border: none;right: 30px;bottom: 3px;"><i class="fas fa-filter"></i></button>
-                        <a href="{{ route('tasks.showMyTasks') }}"><i class="fas fa-times"></i></a>
+                        <a href="{{ route('lists.showMyTasks', $taskListId) }}"><i class="fas fa-times"></i></a>
                     </div>
                 </form>
             </div>
@@ -104,12 +105,12 @@
         <script src="{{ asset('js/search.js') }}"></script>
         <script src="{{ asset('js/modal.js') }}"></script>
     </div>
-    <form id="createTaskFormModal" method="POST" action="{{ route('tasks.store') }}">
+    <form id="createTaskFormModal" method="POST" action="{{ route('tasks.store', $taskListId) }}">
         {{ csrf_field() }}
         @include('tasks.addTask')
     </form>
-    <form id="shareTaskFormModal" method="POST" action="{{ route('tasks.share') }}">
+    <form id="shareTaskFormModal" method="POST" action="{{ route('tasks.share', $taskListId) }}">
         {{ csrf_field() }}
-        @include('tasks.shareTasks')
+        @include('lists.shareTaskList')
     </form>
 @endsection

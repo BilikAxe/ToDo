@@ -8,8 +8,9 @@
                 <li class="dropdown">
                     <a class="text-white">Задачи</a>
                     <ul>
-                        <li><a class="text-decoration-none" href="{{ route('tasks.showMyTasks') }}">Мои задачи</a></li>
-                        <li><a class="text-decoration-none" href="{{ route('tasks.shared') }}">Общие задачи</a></li>
+                        <li><a class="text-decoration-none" href="{{ route('lists') }}">Списки задач</a></li>
+{{--                        <li><a class="text-decoration-none" href="{{ route('tasks.showMyTasks') }}">Мои задачи</a></li>--}}
+                        <li><a class="text-decoration-none" href="{{ route('lists.shared') }}">Общие задачи</a></li>
                     </ul>
                 </li>
                 <li style="position: relative; width: 100px; left: 1500px; top: 10px;">

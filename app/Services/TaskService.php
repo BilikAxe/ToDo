@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\SaveTaskExceptions;
 use App\Models\Task;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,7 @@ class TaskService
         try {
             $task = new Task();
             $task->title = $data['title'];
+            $task->task_list_id = $data['taskListId'];
             $task->description = $data['description'];
             $task->user_id = auth()->id();
             $task->status = $data['status'];
@@ -46,7 +48,7 @@ class TaskService
     /**
      * @throws SaveTaskExceptions
      */
-    public function updateTask(array $data, ?UploadedFile $image, Task $task, bool $deleteImage): void
+    public function updateTask(array $data, ?UploadedFile $image, Task $task, bool $deleteImage): RedirectResponse
     {
         $task->title = $data['title'];
         $task->status = $data['status'];
@@ -65,6 +67,8 @@ class TaskService
         if ($deleteImage) {
             $this->imageService->deleteImage($task);
         }
+
+        return back();
     }
 
     public function deleteTask(Task $task): void

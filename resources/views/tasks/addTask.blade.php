@@ -55,7 +55,7 @@
                         <input type="file" name="image" id="image">
                     </div>
 
-
+                    <input type="hidden" name="taskListId" value="{{ $taskListId }}">
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
