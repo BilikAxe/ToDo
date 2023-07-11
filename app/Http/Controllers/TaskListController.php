@@ -52,7 +52,7 @@ class TaskListController extends Controller
         ]);
     }
 
-    public function getSharedTaskLists()
+    public function getSharedTaskLists(): View|Application|Factory
     {
         $user = auth()->user();
         $taskLists = $user->shares()->paginate(5);

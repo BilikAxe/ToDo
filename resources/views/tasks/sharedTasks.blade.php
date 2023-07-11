@@ -84,11 +84,11 @@
                                     <td style="text-align: center; vertical-align: middle;">
                                         <button type="button" class="btn btn-outline-secondary btn-edit-task"
                                                 data-toggle="modal"
-                                                data-target="#editTaskModal{{ $task->id }}">
+                                                data-target="#editTaskModal{{ $task->id, $taskListId }}">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
-                                    @include('tasks.editTask', ['task' => $task])
+                                    @include('tasks.editTask', ['task' => $task, 'taskListId' => $taskListId])
                                 @endif
                             </tr>
                         @endforeach

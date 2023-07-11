@@ -42,13 +42,13 @@ class TaskController extends Controller
     /**
      * @throws SaveTaskExceptions
      */
-    public function update(TaskRequest $request, Task $task): RedirectResponse
+    public function update(TaskRequest $request, Task $task): View|Factory|Application
     {
         $data = $request->all();
         $deleteImage = $request->has('delete_image');
         $this->taskService->updateTask($data, $request->file('image'), $task, $deleteImage);
 
-        return back();
+        return $this->getSharedTasks($request);
     }
 
     public function edit(Task $task): Factory|View|Application
@@ -137,7 +137,6 @@ class TaskController extends Controller
                 ]);
             }
         }
-
 
         return back();
     }

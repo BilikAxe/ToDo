@@ -48,7 +48,7 @@ class TaskService
     /**
      * @throws SaveTaskExceptions
      */
-    public function updateTask(array $data, ?UploadedFile $image, Task $task, bool $deleteImage): RedirectResponse
+    public function updateTask(array $data, ?UploadedFile $image, Task $task, bool $deleteImage)
     {
         $task->title = $data['title'];
         $task->status = $data['status'];
@@ -68,7 +68,6 @@ class TaskService
             $this->imageService->deleteImage($task);
         }
 
-        return back();
     }
 
     public function deleteTask(Task $task): void

@@ -1,4 +1,4 @@
-<div class="modal fade" id="editTaskModal{{ $task->id }}" tabindex="-1" role="dialog"
+<div class="modal fade" id="editTaskModal{{ $task->id, $taskListId }}" tabindex="-1" role="dialog"
      aria-labelledby="editTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -8,7 +8,7 @@
                     <span aria-hidden="true"><i class="fas fa-times"></i></span>
                 </button>
             </div>
-            <form action="{{ route('tasks.update', $task->id) }}" method="POST" id="editTaskForm"
+            <form action="{{ route('tasks.update', $task->id, $taskListId) }}" method="POST" id="editTaskForm"
                   enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -53,6 +53,8 @@
                             <label class="form-check-label" for="delete_image">Удалить изображение</label>
                         </div>
                     </div>
+
+                    <input type="hidden" name="taskListId" value="{{ $taskListId }}">
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
