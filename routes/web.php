@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/share/{id?}', [TaskController::class, 'getSharedTasks'])->name('tasks.shared');
     Route::get('/my-tasks', [TaskController::class, 'showMyTasks'])->name('tasks.showMyTasks');
     Route::get('/lists', [TaskListController::class, 'getMyLists'])->name('lists');
-    Route::get('/list/{id?}', [TaskListController::class, 'getTasks'])->name('lists.showMyTasks');
+    Route::get('/list/{id?}', [TaskController::class, 'showMyTasks'])->name('lists.showMyTasks');
     Route::post('/create-task-list', [TaskListController::class, 'store'])->name('lists.store');
     Route::delete('/lists/{list}', [TaskListController::class, 'delete'])->name('lists.delete');
     Route::get('/shared-list', [TaskListController::class, 'getSharedTaskLists'])->name('lists.shared');

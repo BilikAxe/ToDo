@@ -44,7 +44,6 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, Task $task): View|Factory|Application
     {
-//        dd($request->all());
         $data = $request->all();
         $taskListId = $request->taskListId;
         $deleteImage = $request->has('delete_image');

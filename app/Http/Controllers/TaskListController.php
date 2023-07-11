@@ -37,21 +37,6 @@ class TaskListController extends Controller
         ]);
     }
 
-    public function getTasks(?int $taskListId): View|Application|Factory
-    {
-        $user = auth()->user();
-        $tasks = $user->tasks()->where('task_list_id', $taskListId)->paginate(5);
-        $permissions = Permission::all();
-        $otherUsers = User::query()->select('users.*')->whereNotIn('users.id',[$user->id])->get();
-
-        return view('tasks.showMyTasks', [
-            'taskListId' => $taskListId,
-            'tasks' => $tasks,
-            'otherUsers' => $otherUsers,
-            'permissions' => $permissions,
-        ]);
-    }
-
     public function getSharedTaskLists(): View|Application|Factory
     {
         $user = auth()->user();

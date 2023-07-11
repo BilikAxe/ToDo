@@ -48,7 +48,7 @@ class TaskService
     /**
      * @throws SaveTaskExceptions
      */
-    public function updateTask(array $data, ?UploadedFile $image, Task $task, bool $deleteImage)
+    public function updateTask(array $data, ?UploadedFile $image, Task $task, bool $deleteImage): void
     {
         $task->title = $data['title'];
         $task->status = $data['status'];
