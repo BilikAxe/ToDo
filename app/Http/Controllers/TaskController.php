@@ -44,11 +44,16 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, Task $task): View|Factory|Application
     {
+//        dd($request->all());
         $data = $request->all();
+        $taskListId = $request->taskListId;
         $deleteImage = $request->has('delete_image');
         $this->taskService->updateTask($data, $request->file('image'), $task, $deleteImage);
+        if ($request->from === 'sharedTask') {
+            return $this->getSharedTasks($request);
+        }
 
-        return $this->getSharedTasks($request);
+        return $this->showMyTasks($taskListId);
     }
 
     public function edit(Task $task): Factory|View|Application
@@ -67,15 +72,15 @@ class TaskController extends Controller
         return back();
     }
 
-    public function showMyTasks(): View|Factory|Application
+    public function showMyTasks(?int $taskListId): View|Factory|Application
     {
         $user = auth()->user();
-        $tasks = $user->tasks()->paginate(5);
+        $tasks = $user->tasks()->where('task_list_id', $taskListId)->paginate(5);
         $permissions = Permission::all();
         $otherUsers = User::query()->select('users.*')->whereNotIn('users.id',[$user->id])->get();
 
         return view('tasks.showMyTasks', [
-            'taskListId' => null,
+            'taskListId' => $taskListId,
             'tasks' => $tasks,
             'otherUsers' => $otherUsers,
             'permissions' => $permissions,

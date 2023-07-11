@@ -55,6 +55,7 @@
                     </div>
 
                     <input type="hidden" name="taskListId" value="{{ $taskListId }}">
+                    <input type="hidden" name="from" value="{{ $from }}">
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>

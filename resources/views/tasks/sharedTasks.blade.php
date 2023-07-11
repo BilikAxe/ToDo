@@ -88,7 +88,7 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
-                                    @include('tasks.editTask', ['task' => $task, 'taskListId' => $taskListId])
+                                    @include('tasks.editTask', ['task' => $task, 'taskListId' => $taskListId, 'from' => 'sharedTask'])
                                 @endif
                             </tr>
                         @endforeach
